@@ -38,7 +38,7 @@
   <script>
     // Função para obter os estados dos LEDs do Arduino
     function getLedStates() {
-      fetch('http://192.168.1.124:8023/leds')  // IP do Arduino + o caminho da requisição
+      fetch('http://sidneitania.ddns.net:8023/leds')  // IP do Arduino + o caminho da requisição
         .then(response => response.text())  // Recebe a resposta como texto
         .then(data => {
           document.getElementById('ledStates').textContent = 'Estados dos LEDs:\n' + data;
@@ -50,7 +50,7 @@
 
     // Função para ligar/desligar o LED
     function toggleLed(led) {
-      fetch(`http://192.168.1.124:8023/ligar?led=${led}`)  // Ligar o LED
+      fetch(`http://sidneitania.ddns.net/ligar?led=${led}`)  // Ligar o LED
         .then(response => response.text())
         .then(data => {
           console.log(data);  // Você pode adicionar uma resposta visual se necessário
