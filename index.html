@@ -5,7 +5,7 @@
   <title>Controle de LEDs</title>
   <script>
     function toggleLED(led, checkbox) {
-      const url = checkbox.checked ? `sidneitania.ddns.net:8023/ligar?led=${led}` : `sidneitania.ddns.net:8023/desligar?led=${led}`;
+      const url = checkbox.checked ? `http://sidneitania.ddns.net:8023/ligar?led=${led}` : `http://sidneitania.ddns.net:8023/desligar?led=${led}`;
       fetch(url).catch(err => console.error("Erro ao enviar comando:", err));
     }
   </script>
