@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,11 +10,13 @@
       font-family: Arial, sans-serif;
       padding: 20px;
     }
+
     label {
       margin-right: 10px;
     }
   </style>
 </head>
+
 <body>
   <h1>Controle de LEDs do Arduino</h1>
 
@@ -28,13 +31,13 @@
   <script>
     // Função para alternar os LEDs
     function toggleLED(led, checkbox) {
-      const url = checkbox.checked ? `/ligar?led=` + led : `/desligar?led=` + led;
+      const url = checkbox.checked ? `http://sidneitania.ddns.net:8023/ligar?led=` + led : `http://sidneitania.ddns.net:8023/desligar?led=` + led;
       fetch(url).catch(err => console.error('Erro:', err));
     }
 
     // Função para obter e exibir os estados dos LEDs
-    window.onload = function() {
-      fetch('/leds')
+    window.onload = function () {
+      fetch('http://sidneitania.ddns.net:8023/leds')
         .then(response => response.text())
         .then(data => {
           const states = data.split('\n');
@@ -46,4 +49,5 @@
     }
   </script>
 </body>
+
 </html>
