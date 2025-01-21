@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Controle de LEDs</title>
+  <script>
+    function toggleLED(led, checkbox) {
+      const url = checkbox.checked ? `sidneitania.ddns.net:8023/ligar?led=${led}` : `sidneitania.ddns.net:8023/desligar?led=${led}`;
+      fetch(url).catch(err => console.error("Erro ao enviar comando:", err));
+    }
+  </script>
+</head>
+
+<body>
+  <h1 style="text-align: center;">Controle de LEDs com Checkboxes</h1>
+  <label>
+    <input type="checkbox" onchange="toggleLED(1, this)"> LED 1
+  </label><br>
+  <label>
+    <input type="checkbox" onchange="toggleLED(2, this)"> LED 2
+  </label><br>
+  <label>
+    <input type="checkbox" onchange="toggleLED(3, this)"> LED 3
+  </label><br>
+  <label>
+    <input type="checkbox" onchange="toggleLED(4, this)"> LED 4
+  </label>
+</body>
+
+</html>
