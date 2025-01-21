@@ -1,66 +1,49 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Controle de LEDs do Arduino</title>
+  <title>Controle de LEDs</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       padding: 20px;
     }
-
-    .result {
-      margin-top: 20px;
-      font-weight: bold;
+    label {
+      margin-right: 10px;
     }
   </style>
 </head>
-
 <body>
-  <h1>Controle e Leitura de LEDs do Arduino</h1>
-
-  <button onclick="getLedStates()">Obter Estados dos LEDs</button>
+  <h1>Controle de LEDs do Arduino</h1>
 
   <h3>Controle dos LEDs:</h3>
   <div id="ledControl">
-    <button onclick="toggleLed(1)">LED 1</button>
-    <button onclick="toggleLed(2)">LED 2</button>
-    <button onclick="toggleLed(3)">LED 3</button>
-    <button onclick="toggleLed(4)">LED 4</button>
-  </div>
-
-  <div class="result">
-    <pre id="ledStates">Estados dos LEDs:</pre>
+    <label><input type="checkbox" id="led1" onchange="toggleLED(1, this)"> LED 1</label>
+    <label><input type="checkbox" id="led2" onchange="toggleLED(2, this)"> LED 2</label>
+    <label><input type="checkbox" id="led3" onchange="toggleLED(3, this)"> LED 3</label>
+    <label><input type="checkbox" id="led4" onchange="toggleLED(4, this)"> LED 4</label>
   </div>
 
   <script>
-    // Função para obter os estados dos LEDs do Arduino
-    function getLedStates() {
-      fetch('http://sidneitania.ddns.net:8023/leds')  // IP do Arduino + o caminho da requisição
-        .then(response => response.text())  // Recebe a resposta como texto
-        .then(data => {
-          document.getElementById('ledStates').textContent = 'Estados dos LEDs:\n' + data;
-        })
-        .catch(error => {
-          console.error('Erro:', error);
-        });
+    // Função para alternar os LEDs
+    function toggleLED(led, checkbox) {
+      const url = checkbox.checked ? `/ligar?led=` + led : `/desligar?led=` + led;
+      fetch(url).catch(err => console.error('Erro:', err));
     }
 
-    // Função para ligar/desligar o LED
-    function toggleLed(led) {
-      fetch(`http://sidneitania.ddns.net/ligar?led=${led}`)  // Ligar o LED
+    // Função para obter e exibir os estados dos LEDs
+    window.onload = function() {
+      fetch('/leds')
         .then(response => response.text())
         .then(data => {
-          console.log(data);  // Você pode adicionar uma resposta visual se necessário
-          getLedStates();     // Atualiza o estado dos LEDs
-        })
-        .catch(error => {
-          console.error('Erro:', error);
+          const states = data.split('\n');
+          states.forEach((state, i) => {
+            const checkbox = document.getElementById('led' + (i + 1));
+            checkbox.checked = state.includes('Ligado');
+          });
         });
     }
   </script>
 </body>
-
 </html>
