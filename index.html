@@ -31,8 +31,8 @@
   <script>
     // Função para alternar os LEDs
     function toggleLED(led, checkbox) {
-  const url = checkbox.checked
-    ? `https://sidneitania.ddns.net:8023/ligar?led=` + led
+  const url = checkbox.checked 
+    ? `https://sidneitania.ddns.net:8023/ligar?led=` + led 
     : `https://sidneitania.ddns.net:8023/desligar?led=` + led;
 
   fetch(url)
@@ -42,8 +42,12 @@
       }
       return response.text();
     })
-    .then(data => console.log(`Resposta do servidor: ${data}`))
-    .catch(err => console.error('Erro na requisição:', err));
+    .then(data => {
+      console.log(`Resposta do servidor: ${data}`);  // Verifique o que o servidor está respondendo
+    })
+    .catch(err => {
+      console.error('Erro na requisição:', err);   // Imprime erros detalhados
+    });
 }
 
     // Função para obter e exibir os estados dos LEDs
