@@ -31,22 +31,41 @@
   <script>
     // Função para alternar os LEDs
     function toggleLED(led, checkbox) {
-      const url = checkbox.checked ? `https://sidneitania.ddns.net:8023/ligar?led=` + led : `https://sidneitania.ddns.net:8023/desligar?led=` + led;
-      fetch(url).catch(err => console.error('Erro:', err));
-    }
+  const url = checkbox.checked
+    ? `https://sidneitania.ddns.net:8023/ligar?led=` + led
+    : `https://sidneitania.ddns.net:8023/desligar?led=` + led;
+
+  fetch(url)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Erro HTTP: ${response.status}`);
+      }
+      return response.text();
+    })
+    .then(data => console.log(`Resposta do servidor: ${data}`))
+    .catch(err => console.error('Erro na requisição:', err));
+}
 
     // Função para obter e exibir os estados dos LEDs
     window.onload = function () {
-      fetch('https://sidneitania.ddns.net:8023/leds')
-        .then(response => response.text())
-        .then(data => {
-          const states = data.split('\n');
-          states.forEach((state, i) => {
-            const checkbox = document.getElementById('led' + (i + 1));
-            checkbox.checked = state.includes('Ligado');
-          });
-        });
-    }
+  fetch('https://sidneitania.ddns.net:8023/leds')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Erro HTTP: ${response.status}`);
+      }
+      return response.text();
+    })
+    .then(data => {
+      const states = data.split('\n'); // Supondo que o servidor envie os estados como texto separado por quebras de linha
+      states.forEach((state, i) => {
+        const checkbox = document.getElementById('led' + (i + 1));
+        if (checkbox) {
+          checkbox.checked = state.includes('Ligado');
+        }
+      });
+    })
+    .catch(err => console.error('Erro ao carregar estados dos LEDs:', err));
+}
   </script>
 </body>
 
