@@ -37,7 +37,7 @@
 
     // Função para obter e exibir os estados dos LEDs
     window.onload = function () {
-      fetch('http://sidneitania.ddns.net:8023/leds')
+      fetch('https://sidneitania.ddns.net:8023/leds')
         .then(response => response.text())
         .then(data => {
           const states = data.split('\n');
