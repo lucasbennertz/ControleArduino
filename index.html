@@ -32,8 +32,8 @@
     // Função para alternar os LEDs
     function toggleLED(led, checkbox) {
   const url = checkbox.checked 
-    ? `https://sidneitania.ddns.net:8023/ligar?led=` + led 
-    : `https://sidneitania.ddns.net:8023/desligar?led=` + led;
+    ? `https://sidneitania.ddns.net:8023/led` + led + '/on'
+    : `https://sidneitania.ddns.net:8023/led` + led + '/off';
 
   fetch(url)
     .then(response => {
